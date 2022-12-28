@@ -48,6 +48,10 @@ open class ServerFactory(
 
                     call.respond(mapOf("ip" to ip))
                 }
+
+                get("/healthcheck") {
+                    call.respond(mapOf("status" to "ok"))
+                }
             }
         }
     }
