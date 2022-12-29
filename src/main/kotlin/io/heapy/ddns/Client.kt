@@ -289,16 +289,18 @@ class DefaultDigitalOceanClient(
         val type: String,
         val name: String,
         val data: String,
+        val ttl: Int,
     )
 
     private suspend fun updateDomainRecord(id: Long, ip: String) {
         httpClient
-            .post("$doUrl/$id") {
+            .put("$doUrl/$id") {
                 header("Content-Type", "application/json")
                 header("Authorization", "Bearer $token")
                 setBody(DomainRecord(
                     type = domainConfig.recordType,
                     name = domainConfig.subdomain,
+                    ttl = domainConfig.ttl,
                     data = ip,
                 ))
             }
@@ -306,12 +308,13 @@ class DefaultDigitalOceanClient(
 
     private suspend fun createDomainRecord(ip: String) {
         httpClient
-            .put(doUrl) {
+            .post(doUrl) {
                 header("Content-Type", "application/json")
                 header("Authorization", "Bearer $token")
                 setBody(DomainRecord(
                     type = domainConfig.recordType,
                     name = domainConfig.subdomain,
+                    ttl = domainConfig.ttl,
                     data = ip,
                 ))
             }
