@@ -1,7 +1,7 @@
 @file:JvmName("Application")
 package io.heapy.ddns
 
-fun main() {
+suspend fun main() {
     val config = System.getenv()
 
     if (config["MODE"] == "server") {

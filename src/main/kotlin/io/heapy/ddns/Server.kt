@@ -10,6 +10,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 
 open class ServerFactory(
@@ -24,8 +25,8 @@ open class ServerFactory(
     open val server by lazy {
         embeddedServer(
             factory = CIO,
-            port = serverConfiguration.port,
-            host = serverConfiguration.host,
+            port = configuration.port,
+            host = configuration.host,
             module = module,
         )
     }
@@ -41,8 +42,8 @@ open class ServerFactory(
             }
 
             routing {
-                get("/") {
-                    val ip = serverConfiguration.header?.let { header ->
+                post("/") {
+                    val ip = configuration.header?.let { header ->
                         call.request.header(header)
                     } ?: call.request.local.remoteAddress
 
@@ -56,7 +57,7 @@ open class ServerFactory(
         }
     }
 
-    open val serverConfiguration by lazy {
+    open val configuration by lazy {
         Configuration(
             port = config["PORT"]?.toInt() ?: 8080,
             host = config["HOST"] ?: "0.0.0.0",
