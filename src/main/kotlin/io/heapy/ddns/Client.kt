@@ -2,7 +2,7 @@ package io.heapy.ddns
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.apache.Apache
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -47,7 +47,7 @@ open class ClientFactory(
     }
 
     open val httpClient by lazy {
-        HttpClient(Apache) {
+        HttpClient(CIO) {
             install(ContentNegotiation) {
                 json()
             }

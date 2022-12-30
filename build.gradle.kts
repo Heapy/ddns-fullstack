@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.1")
 
-    implementation("io.ktor:ktor-client-apache:2.2.1")
+    implementation("io.ktor:ktor-client-cio:2.2.1")
     implementation("io.ktor:ktor-client-content-negotiation:2.2.1")
 
     implementation("io.ktor:ktor-server-cio:2.2.1")
