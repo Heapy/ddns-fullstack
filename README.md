@@ -25,14 +25,27 @@ Simple client-server DDNS setup for personal use.
 | Parameter               | Default | Required | Description                                                                                |
 |-------------------------|---------|----------|--------------------------------------------------------------------------------------------|
 | MODE                    | client  | false    | Describes mode in which application running, omit or set to `client` to run as DNS updater |
-| TOKEN                   | none    | true     | Token to access DigitalOcean API                                                           |
-| DOMAIN                  | none    | true     | Domain name to update, example: `bar.com`                                                  |
-| SUBDOMAIN               | none    | true     | Subdomain to update, example: `foo` (for foo.bar.com)                                      |
 | RECORD_TYPE             | A       | false    | Record type to update                                                                      |
 | SERVER_URL              | none    | true     | URL to endpoint that returns IP                                                            |
 | CHECK_PERIOD            | 5m      | false    | Period of time between checks for IP change                                                |
 | REQUEST_TIMEOUT         | 30s     | false    | Timeout for request to server                                                              |
 | ATTEMPTS_BEFORE_WARNING | 5       | false    | Number of attempts to make before warning about failed request                             |
+
+### Digitalocean DNS
+
+| Parameter                | Default | Required | Description                                           |
+|--------------------------|---------|----------|-------------------------------------------------------|
+| DIGITALOCEAN_TOKEN       | none    | true     | Token to access DigitalOcean API                      |
+| DIGITALOCEAN_DOMAIN_NAME | none    | true     | Domain name to update, example: `bar.com`             |
+| DIGITALOCEAN_SUBDOMAIN   | none    | true     | Subdomain to update, example: `foo` (for foo.bar.com) |
+
+### Cloudflare DNS
+
+| Parameter              | Default | Required | Description                                   |
+|------------------------|---------|----------|-----------------------------------------------|
+| CLOUDFLARE_TOKEN       | none    | true     | Token to access Cloudflare API                |
+| CLOUDFLARE_DOMAIN_NAME | none    | true     | Domain name to update, example: `foo.bar.com` |
+| CLOUDFLARE_ZONE_ID     | none    | true     | Cloudflare Zone Id                            |
 
 ### Telegram channel for notifications
 
