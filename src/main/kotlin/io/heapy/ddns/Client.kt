@@ -1,17 +1,16 @@
 package io.heapy.ddns
 
+import io.heapy.ddns.dns_clients.CloudflareDnsClient
+import io.heapy.ddns.dns_clients.DigitalOceanDnsClient
+import io.heapy.ddns.dns_clients.DnsClient
+import io.heapy.ddns.notifiers.Notifier
+import io.heapy.ddns.notifiers.TelegramNotifier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
-import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.header
 import io.ktor.client.request.post
-import io.ktor.client.request.put
-import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
@@ -25,21 +24,12 @@ open class ClientFactory(
     open val config: Map<String, String>,
 ) {
     data class Configuration(
-        val token: String,
         val serverUrl: String,
         val checkPeriod: Duration,
         val requestTimeout: Duration,
         val attemptsBeforeWarning: Int,
         val telegram: Telegram?,
-        val domain: Domain,
     ) {
-        data class Domain(
-            val domain: String,
-            val recordType: String,
-            val subdomain: String,
-            val ttl: Int,
-        )
-
         data class Telegram(
             val token: String,
             val chatId: String,
@@ -59,15 +49,50 @@ open class ClientFactory(
             checkPeriod = configuration.checkPeriod,
             ipProvider = ipProvider,
             notifier = notifier,
-            digitalOceanClient = digitalOceanClient,
+            dnsClients = dnsClients,
         )
     }
 
-    open val digitalOceanClient: DigitalOceanClient by lazy {
-        DefaultDigitalOceanClient(
+    open val dnsClients: List<DnsClient> by lazy {
+        buildList {
+            if(config["CLOUDFLARE_TOKEN"] != null) add(cloudflareDnsClient)
+            if(config["DIGITALOCEAN_TOKEN"] != null) add(digitalOceanDnsClient)
+        }
+    }
+
+    open val digitalOceanDnsClient: DnsClient by lazy {
+        DigitalOceanDnsClient(
             httpClient = httpClient,
-            token = configuration.token,
-            domainConfig = configuration.domain,
+            configuration = digitalOceanConfiguration,
+        )
+    }
+
+    open val digitalOceanConfiguration: DigitalOceanDnsClient.Configuration by lazy {
+        DigitalOceanDnsClient.Configuration(
+            token = config["DIGITALOCEAN_TOKEN"]
+                ?: error("DIGITALOCEAN_TOKEN is not set"),
+            domainName = config["DIGITALOCEAN_DOMAIN_NAME"]
+                ?: error("DIGITALOCEAN_DOMAIN_NAME is not set"),
+            subdomain = config["DIGITALOCEAN_SUBDOMAIN"]
+                ?: error("DIGITALOCEAN_SUBDOMAIN is not set"),
+        )
+    }
+
+    open val cloudflareDnsClient: DnsClient by lazy {
+        CloudflareDnsClient(
+            httpClient = httpClient,
+            configuration = cloudflareConfiguration,
+        )
+    }
+
+    open val cloudflareConfiguration: CloudflareDnsClient.Configuration by lazy {
+        CloudflareDnsClient.Configuration(
+            zoneId = config["CLOUDFLARE_ZONE_ID"]
+                ?: error("CLOUDFLARE_ZONE_ID is not set"),
+            token = config["CLOUDFLARE_TOKEN"]
+                ?: error("CLOUDFLARE_TOKEN is not set"),
+            domainName = config["CLOUDFLARE_DOMAIN_NAME"]
+                ?: error("CLOUDFLARE_DOMAIN_NAME is not set"),
         )
     }
 
@@ -89,8 +114,6 @@ open class ClientFactory(
 
     open val configuration by lazy {
         Configuration(
-            token = config["TOKEN"]
-                ?: error("TOKEN is not set"),
             serverUrl = config["SERVER_URL"]
                 ?: error("SERVER_URL is not set"),
             checkPeriod = config["CHECK_PERIOD"]?.let(Duration::parse)
@@ -105,16 +128,6 @@ open class ClientFactory(
                         ?: error("TELEGRAM_CHAT_ID is not set"),
                 )
             },
-            domain = Configuration.Domain(
-                domain = config["DOMAIN"]
-                    ?: error("DOMAIN is not set"),
-                recordType = config["RECORD_TYPE"]
-                    ?: "A",
-                subdomain = config["SUBDOMAIN"]
-                    ?: error("SUBDOMAIN is not set"),
-                ttl = config["TTL"]?.toInt()
-                    ?: 180,
-            ),
         )
     }
 
@@ -131,7 +144,7 @@ class SimpleUpdater(
     private val checkPeriod: Duration,
     private val ipProvider: IpProvider,
     private val notifier: Notifier?,
-    private val digitalOceanClient: DigitalOceanClient,
+    private val dnsClients: List<DnsClient>,
 ) : Updater {
     override suspend fun start() {
         var nextUpdate = ZonedDateTime.now()
@@ -164,7 +177,9 @@ class SimpleUpdater(
         if (newIP != IP) {
             IP = newIP
             log.info("IP changed to $IP")
-            digitalOceanClient.createOrUpdateRecord(IP)
+            dnsClients.forEach {
+                it.createOrUpdateRecord(IP)
+            }
             notifier?.notify(IP)
         }
     }
@@ -191,139 +206,5 @@ class ServerIpProvider(
         return httpClient.post(serverUrl)
             .body<Response>()
             .ip
-    }
-}
-
-interface Notifier {
-    suspend fun notify(message: String)
-}
-
-class TelegramNotifier(
-    private val httpClient: HttpClient,
-    private val telegram: ClientFactory.Configuration.Telegram,
-) : Notifier {
-    @Serializable
-    data class SendMessageRequest(
-        val chat_id: String,
-        val text: String,
-    )
-
-    override suspend fun notify(message: String) {
-        httpClient.post("https://api.telegram.org/bot${telegram.token}/sendMessage") {
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
-            setBody(SendMessageRequest(
-                chat_id = telegram.chatId,
-                text = message,
-            ))
-        }
-    }
-}
-
-interface DigitalOceanClient {
-    suspend fun createOrUpdateRecord(
-        ip: String,
-    )
-}
-
-class DefaultDigitalOceanClient(
-    private val httpClient: HttpClient,
-    private val token: String,
-    private val domainConfig: ClientFactory.Configuration.Domain,
-) : DigitalOceanClient {
-    override suspend fun createOrUpdateRecord(
-        ip: String,
-    ) {
-        val records = getDomainRecords()
-        val record = records.domain_records
-            .find { it.name == domainConfig.subdomain }
-
-        if (record == null) {
-            log.info("Creating new record")
-            createDomainRecord(ip)
-        } else {
-            log.info("Record already exists, updating $record")
-            updateDomainRecord(record.id, ip)
-        }
-    }
-
-    private suspend fun getDomainRecords(): Records {
-        return httpClient
-            .get(doUrl) {
-                header("Content-Type", "application/json")
-                header("Authorization", "Bearer $token")
-            }
-            .body()
-    }
-
-    @Serializable
-    data class Records(
-        val domain_records: List<DomainRecord>,
-        val links: Links,
-        val meta: Meta,
-    ) {
-        @Serializable
-        data class DomainRecord(
-            val id: Long,
-            val type: String,
-            val `data`: String,
-            val ttl: Int,
-            val name: String,
-            val flags: Int? = null,
-            val port: Int? = null,
-            val priority: Int? = null,
-            val tag: String? = null,
-            val weight: Int? = null,
-        )
-
-        @Serializable
-        class Links
-
-        @Serializable
-        data class Meta(
-            val total: Int,
-        )
-    }
-
-    @Serializable
-    data class DomainRecord(
-        val type: String,
-        val name: String,
-        val data: String,
-        val ttl: Int,
-    )
-
-    private suspend fun updateDomainRecord(id: Long, ip: String) {
-        httpClient
-            .put("$doUrl/$id") {
-                header("Content-Type", "application/json")
-                header("Authorization", "Bearer $token")
-                setBody(DomainRecord(
-                    type = domainConfig.recordType,
-                    name = domainConfig.subdomain,
-                    ttl = domainConfig.ttl,
-                    data = ip,
-                ))
-            }
-    }
-
-    private suspend fun createDomainRecord(ip: String) {
-        httpClient
-            .post(doUrl) {
-                header("Content-Type", "application/json")
-                header("Authorization", "Bearer $token")
-                setBody(DomainRecord(
-                    type = domainConfig.recordType,
-                    name = domainConfig.subdomain,
-                    ttl = domainConfig.ttl,
-                    data = ip,
-                ))
-            }
-    }
-
-    private val doUrl: String
-        get() = "https://api.digitalocean.com/v2/domains/${domainConfig.domain}/records"
-
-    companion object {
-        private val log = LoggerFactory.getLogger(DefaultDigitalOceanClient::class.java)
     }
 }
