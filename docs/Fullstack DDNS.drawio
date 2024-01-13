@@ -1,1 +1,95 @@
-<mxfile host="app.diagrams.net" modified="2023-01-11T22:58:55.485Z" agent="5.0 (Macintosh)" etag="6FSTFnVj3597KPVBJNsM" version="20.8.4" type="device"><diagram id="XXhqm3N4sLSxsxqlQ_4P" name="Fullstack DDNS">7Vvbcts2EP0aPcbDi66PFiUnmaapxnIm7lMHIlckEohgQFCXfn0XIHiTaMV2XNtJqGlS4RBYLJZnz4Kg0nO9zf6tIEn0Jw+A9Rwr2PfcWc9xBpMJ/q2AQw4Mh3YOhIIGOVQDlvRfMKBl0IwGkDY6Ss6ZpEkT9Hkcgy8bGBGC75rd1pw1Z01ICCfA0ifsFP1MAxnl6HhgVfg7oGFUzGxb5sqGFJ0NkEYk4Lsa5M57ric4l/m3zd4DpmJXxCUfd3XH1dIxAbFsGcBXX1Q8sAcjPkS4bhBHIet/JBuzzKuMsVQS/yvis9nHZdHj5pCYHstDKmGz9HkCU57FARGHotNlkjDqE0l5bPrytdyhY3g1H5b3ZGSF5NA9es6QodfTNY+Vj6k8mIAPv2W8uPAm1XS4xA72MNlXF/FbaP6vrayOgYBuW61K2Ms3hNEwzs0yWMs2swMTG2dQWMS4aqPNeRA9mRuxfFVP6tIg96oeanRuMLvLP6dGFXLtwZXnsv78n+nSuhncTqLsjV1SsKRW5Zwj1C0GNd42N8Okpq3au4hKWCbIK0R2mPeIRXLDTPeApFE5lgjfDEV+oinKmMcZFwjEPEZ8mkrBv0IB9hx3qD9m3hqefxDXRJoiW0Pt55E9E8yZjqQ73YKQGDJ2aeAVl5JvSitcYGIce4RLo3F4w3FhM6sC1JIss8AFkRKEMjjG0PUR3YAk84BKs3DBJZFkpSOqBiUgKHYBNY/A1CRxyGBRgdOYfzAJYhXeLUgQ5PNaemGM7y4LUVOIUb3aLLBPSByYBk6TiZRu4RryVMq7oI9mhPIz4TRGB+Zb1JHCLlmlnGUSLsubV/bUGjJQhLQuVHp4lv6jmOhpsA0bnYK2ahUWmmAbNhq0mbRb5j7GnBaw1WTL3NaRk/hfkVx14TWCqpgG+xpk0ustcLzHSi+tXVVDqlIR1QpI3zUgMWIdloMrbccvJmmLplH7Ryj/jIZIB/aXDyRW4i94wkCe6r+HuUhoDOJ+JaDs3kn/q5N+t5P+Tvo76X9m6S+uGn03z0P22LRrlcEZthQGe/LchUE/BlhLENtCxZv1YJNgysRVqQA/ijGZQrOyPyQvh80g9QVNqvIw30tBtC9Zqqxb7xfq6UxgdqplE+2ZYykLloBvGaTy+QpJawl4kNg3lVsHDY1pL3KkitVZKTeuiXOTPDQKdnsUBs271Fh72zofXHX6D6g636ky54tAvc6okuJO51fOaUlZ60+taPgQ52pc1a1hW41yrPHQm7SovlLauup3mjk7W2ufQE2dIzWdtKhpv01NnWdW04WgWyLVicg7nnbb6195ez3ottfd9rrbXr/M9rp/XBGecX99ckbfKg9jsyTCsrI28C0N4GgX3Nj21gQEghCWpsmFjHjIY8LmFTqtJEYxrurzgeu0U4T7AlIeDAFJJnlTZmBP5W1Jeyr/Vt/xBuat2b52aXaoNWo5l2Mxxu+2MKoaNUuqWZnSrUO9dWysRVQCWJOMyXPMSXkmfDhzO4Z5P0lECPJ721fHUtE/y0MBDIvItvn66AGcuh+JJick+pQE+f4if2y7Bh9DpXmPtMfQ5BwLDMlekFMq6Wu0+q1JNbonqYy4WReuZRkf7s0zY22hSkytC1+vU3POWydiOenjuWnbJ+T8yCVdq4V8Sost60uxb/RE7LN+fvYVR1EPoJ/dd36MfvvWAY8h46NOszxG60dWT3Sa5UXgf02L+k3VexSmmIk7HcfKtDCnhTIrKIU4UECs0sI8dKQXvWLr0p1x/axnXMPujOu3fHD5X8+4ylfCr/6Q6+hd8uXi/anS3vHboBZVLX+G9DPr4avQvYYVv8zyqqPr68+LaObohTRz7I37k5azsPtopj6rOhHNkTscjZ1ONF+DaB4dAzmvVTJvgEEoyOZHhNKLiKye9FeYwHqXqV+eplyJmqUSIlHPBLzYdqpYkRXPZLFt9SMSh1CMAyG4egXb6e+vrr+21QlwJ8BPLsDlT+SfX4GxWf2sPj9IqP5tgjv/Dw==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2024-01-13T09:12:03.717Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0" etag="RW8Sy2u78iTC5HkiS5GV" version="22.1.18" type="device">
+  <diagram id="XXhqm3N4sLSxsxqlQ_4P" name="Fullstack DDNS">
+    <mxGraphModel dx="2726" dy="1889" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="Fullstack DDNS" c4Type="SystemScopeBoundary" c4Application="Software System" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-1">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry width="1200" height="580" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="aRCeFC3l4E_BS0T5X9hu-8" value="Provide IP from request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;labelBorderColor=default;" parent="1" source="aRCeFC3l4E_BS0T5X9hu-6" target="aRCeFC3l4E_BS0T5X9hu-4" edge="1">
+          <mxGeometry x="-0.2453" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aRCeFC3l4E_BS0T5X9hu-9" value="Update DNS Record with provided IP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;labelBorderColor=default;" parent="1" source="aRCeFC3l4E_BS0T5X9hu-6" target="aRCeFC3l4E_BS0T5X9hu-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aRCeFC3l4E_BS0T5X9hu-11" value="Notify User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;labelBorderColor=default;" parent="1" source="aRCeFC3l4E_BS0T5X9hu-6" target="aRCeFC3l4E_BS0T5X9hu-10" edge="1">
+          <mxGeometry x="0.3142" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="DigitalOcean API" c4Type="Software System" c4Description="DNS" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-7">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" parent="1" vertex="1">
+            <mxGeometry x="20" y="100" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Telegram" c4Type="Software System" c4Description="Chat with bot, or some group to notify about IP change or errors" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-10">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" parent="1" vertex="1">
+            <mxGeometry x="530" y="440" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Cloudflare API" c4Type="Software System" c4Description="DNS" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="MDJdwFk_CpQH5ZuceJtA-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" vertex="1" parent="1">
+            <mxGeometry x="20" y="270" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-4" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="520" y="170" width="260" height="190" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="Private Host" c4Type="ContainerScopeBoundary" c4Application="Container" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-5">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="MDJdwFk_CpQH5ZuceJtA-4" vertex="1">
+            <mxGeometry width="260" height="190" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="DDNS Client" c4Type="Component" c4Technology="Ktor" c4Description="Checks IP in loop, updates DNS, sends notifications. " label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-6">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" parent="MDJdwFk_CpQH5ZuceJtA-4" vertex="1">
+            <mxGeometry x="10" y="10" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-5" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="920" y="65" width="260" height="190" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="DigitalOcean Droplet" c4Type="ContainerScopeBoundary" c4Application="Container" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-3">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="MDJdwFk_CpQH5ZuceJtA-5" vertex="1">
+            <mxGeometry width="260" height="190" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="DDNS Server" c4Type="Component" c4Technology="Ktor" c4Description="Extract user IP from headers or request" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aRCeFC3l4E_BS0T5X9hu-4">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" parent="MDJdwFk_CpQH5ZuceJtA-5" vertex="1">
+            <mxGeometry x="10" y="10" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="aRCeFC3l4E_BS0T5X9hu-6" target="MDJdwFk_CpQH5ZuceJtA-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-7" value="any combination" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MDJdwFk_CpQH5ZuceJtA-6">
+          <mxGeometry x="-0.6431" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-9" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="920" y="280" width="260" height="190" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="Cloudflare Worker" c4Type="ContainerScopeBoundary" c4Application="Container" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="MDJdwFk_CpQH5ZuceJtA-10">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="MDJdwFk_CpQH5ZuceJtA-9">
+            <mxGeometry width="260" height="190" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="DDNS Server" c4Type="Component" c4Technology="Worker" c4Description="Extract user IP from headers or request" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="MDJdwFk_CpQH5ZuceJtA-11">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];labelBorderColor=none;" vertex="1" parent="MDJdwFk_CpQH5ZuceJtA-9">
+            <mxGeometry x="10" y="10" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="MDJdwFk_CpQH5ZuceJtA-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aRCeFC3l4E_BS0T5X9hu-6" target="MDJdwFk_CpQH5ZuceJtA-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
