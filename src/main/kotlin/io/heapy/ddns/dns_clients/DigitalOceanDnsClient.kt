@@ -12,17 +12,23 @@ class DigitalOceanDnsClient(
 ) : DnsClient {
     override suspend fun createOrUpdateRecord(
         ip: String,
-    ) {
+    ): String? {
         val records = getDomainRecords()
         val record = records.domain_records
             .find { it.name == configuration.subdomain }
 
-        if (record == null) {
+        return if (record == null) {
             log.info("Creating new record")
             createDomainRecord(ip)
+            null
         } else {
-            log.info("Record already exists, updating $record")
-            updateDomainRecord(record.id, ip)
+            if (record.data == ip) {
+                log.info("Record already exists and with up to date ip: $ip")
+            } else {
+                log.info("Record already exists, updating $record")
+                updateDomainRecord(record.id, ip)
+            }
+            record.data
         }
     }
 
@@ -108,6 +114,7 @@ class DigitalOceanDnsClient(
         val token: String,
         val domainName: String,
         val subdomain: String,
+        val ttl: Long,
     )
 
     private val doUrl: String

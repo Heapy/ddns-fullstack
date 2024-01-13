@@ -3,16 +3,15 @@ package io.heapy.ddns
 import io.heapy.ddns.dns_clients.CloudflareDnsClient
 import io.heapy.ddns.dns_clients.DigitalOceanDnsClient
 import io.heapy.ddns.dns_clients.DnsClient
+import io.heapy.ddns.ip_provider.IpProvider
+import io.heapy.ddns.ip_provider.ServerIpProvider
 import io.heapy.ddns.notifiers.Notifier
 import io.heapy.ddns.notifiers.TelegramNotifier
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.post
 import kotlinx.coroutines.delay
-import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 import java.time.ZonedDateTime
 import kotlin.concurrent.thread
@@ -75,6 +74,7 @@ open class ClientFactory(
                 ?: error("DIGITALOCEAN_DOMAIN_NAME is not set"),
             subdomain = config["DIGITALOCEAN_SUBDOMAIN"]
                 ?: error("DIGITALOCEAN_SUBDOMAIN is not set"),
+            ttl = configuration.checkPeriod.inWholeSeconds,
         )
     }
 
@@ -93,6 +93,7 @@ open class ClientFactory(
                 ?: error("CLOUDFLARE_TOKEN is not set"),
             domainName = config["CLOUDFLARE_DOMAIN_NAME"]
                 ?: error("CLOUDFLARE_DOMAIN_NAME is not set"),
+            ttl = configuration.checkPeriod.inWholeSeconds,
         )
     }
 
@@ -178,33 +179,15 @@ class SimpleUpdater(
             IP = newIP
             log.info("IP changed to $IP")
             dnsClients.forEach {
-                it.createOrUpdateRecord(IP)
+                val oldIp = it.createOrUpdateRecord(IP)
+                if (oldIp != IP) {
+                    notifier?.notify(IP)
+                }
             }
-            notifier?.notify(IP)
         }
     }
 
     companion object {
         private val log = LoggerFactory.getLogger(SimpleUpdater::class.java)
-    }
-}
-
-interface IpProvider {
-    suspend fun getIp(): String
-}
-
-class ServerIpProvider(
-    private val httpClient: HttpClient,
-    private val serverUrl: String,
-) : IpProvider {
-    @Serializable
-    data class Response(
-        val ip: String,
-    )
-
-    override suspend fun getIp(): String {
-        return httpClient.post(serverUrl)
-            .body<Response>()
-            .ip
     }
 }

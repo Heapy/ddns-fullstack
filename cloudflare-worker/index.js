@@ -10,10 +10,15 @@
 
 export default {
     fetch(request, env, ctx) {
-        return new Response(JSON.stringify(
+        return new Response(
+            JSON.stringify(
+                {
+                    ip: request.headers.get('cf-connecting-ip'),
+                },
+            ),
             {
-                ip: request.headers.get('cf-connecting-ip'),
-            },
-        ))
+                headers: {'content-type': 'application/json'},
+            }
+        )
     }
 }

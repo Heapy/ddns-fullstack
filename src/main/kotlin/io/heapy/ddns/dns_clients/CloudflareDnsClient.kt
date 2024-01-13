@@ -13,21 +13,29 @@ class CloudflareDnsClient(
     private val httpClient: HttpClient,
     private val configuration: Configuration,
 ) : DnsClient {
-    override suspend fun createOrUpdateRecord(ip: String) {
+    override suspend fun createOrUpdateRecord(
+        ip: String,
+    ): String? {
         val record = getRecord(
             name = configuration.domainName,
             zoneId = configuration.zoneId,
             token = configuration.token,
         )
-        if (record != null) {
-            log.info("Updating record with id=${record.id}")
-            updateRecord(
-                id = record.id,
-                ip = ip,
-                name = configuration.domainName,
-                zoneId = configuration.zoneId,
-                token = configuration.token,
-            )
+        return if (record != null) {
+            if (record.content == ip) {
+                log.info("Record already exists and with up to date ip: $ip")
+            } else {
+                log.info("Updating record with id=${record.id}")
+                updateRecord(
+                    id = record.id,
+                    ip = ip,
+                    name = configuration.domainName,
+                    zoneId = configuration.zoneId,
+                    token = configuration.token,
+                    ttl = configuration.ttl,
+                )
+            }
+            record.content
         } else {
             log.info("Creating record with ip=$ip")
             createRecord(
@@ -35,7 +43,9 @@ class CloudflareDnsClient(
                 name = configuration.domainName,
                 zoneId = configuration.zoneId,
                 token = configuration.token,
+                ttl = configuration.ttl,
             )
+            null
         }
     }
 
@@ -44,7 +54,7 @@ class CloudflareDnsClient(
         name: String,
         zoneId: String,
         token: String,
-        ttl: Long = 300,
+        ttl: Long,
         proxied: Boolean = false,
         recordType: String = "A",
     ) {
@@ -74,7 +84,7 @@ class CloudflareDnsClient(
         name: String,
         zoneId: String,
         token: String,
-        ttl: Long = 300,
+        ttl: Long,
         proxied: Boolean = false,
         recordType: String = "A",
     ) {
@@ -122,6 +132,7 @@ class CloudflareDnsClient(
         val zoneId: String,
         val token: String,
         val domainName: String,
+        val ttl: Long,
     )
 
     @Serializable
