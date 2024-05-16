@@ -1,6 +1,7 @@
 package io.heapy.ddns
 
 import io.heapy.ddns.dns_clients.CloudflareDnsClient
+import io.heapy.ddns.dns_clients.CloudflareVerifyToken
 import io.heapy.ddns.dns_clients.DigitalOceanDnsClient
 import io.heapy.ddns.dns_clients.DnsClient
 import io.heapy.ddns.ip_provider.IpProvider
@@ -78,22 +79,33 @@ open class ClientFactory(
         )
     }
 
-    open val cloudflareDnsClient: DnsClient by lazy {
+    open val cloudflareDnsClient: CloudflareDnsClient by lazy {
         CloudflareDnsClient(
             httpClient = httpClient,
             configuration = cloudflareConfiguration,
+            verifyToken = cloudflareVerifyToken,
         )
+    }
+
+    open val cloudflareVerifyToken: CloudflareVerifyToken by lazy {
+        CloudflareVerifyToken(
+            httpClient = httpClient,
+        )
+    }
+
+    open val cloudflareToken by lazy {
+        config["CLOUDFLARE_TOKEN"]
+            ?: error("CLOUDFLARE_TOKEN is not set")
     }
 
     open val cloudflareConfiguration: CloudflareDnsClient.Configuration by lazy {
         CloudflareDnsClient.Configuration(
             zoneId = config["CLOUDFLARE_ZONE_ID"]
                 ?: error("CLOUDFLARE_ZONE_ID is not set"),
-            token = config["CLOUDFLARE_TOKEN"]
-                ?: error("CLOUDFLARE_TOKEN is not set"),
             domainName = config["CLOUDFLARE_DOMAIN_NAME"]
                 ?: error("CLOUDFLARE_DOMAIN_NAME is not set"),
-            ttl = configuration.checkPeriod.inWholeSeconds,
+            token = cloudflareToken,
+            ttl = checkPeriod.inWholeSeconds,
         )
     }
 
@@ -113,12 +125,16 @@ open class ClientFactory(
         )
     }
 
+    open val checkPeriod by lazy {
+        config["CHECK_PERIOD"]?.let(Duration::parse)
+            ?: 5.minutes
+    }
+
     open val configuration by lazy {
         Configuration(
             serverUrl = config["SERVER_URL"]
                 ?: error("SERVER_URL is not set"),
-            checkPeriod = config["CHECK_PERIOD"]?.let(Duration::parse)
-                ?: 5.minutes,
+            checkPeriod = checkPeriod,
             requestTimeout = config["REQUEST_TIMEOUT"]?.let(Duration::parse)
                 ?: 30.seconds,
             attemptsBeforeWarning = config["ATTEMPTS_BEFORE_WARNING"]?.toInt() ?: 5,

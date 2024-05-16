@@ -12,10 +12,18 @@ import java.time.OffsetDateTime
 class CloudflareDnsClient(
     private val httpClient: HttpClient,
     private val configuration: Configuration,
+    private val verifyToken: CloudflareVerifyToken,
 ) : DnsClient {
     override suspend fun createOrUpdateRecord(
         ip: String,
     ): String? {
+        val verifyTokenResponse = verifyToken(configuration.token)
+
+        if (!verifyTokenResponse.success) {
+            log.error("Token verification failed: ${verifyTokenResponse.errors}")
+            return null
+        }
+
         val record = getRecord(
             name = configuration.domainName,
             zoneId = configuration.zoneId,
@@ -112,7 +120,7 @@ class CloudflareDnsClient(
         return "$type by io.heapy.ddns-fullstack on ${OffsetDateTime.now()}"
     }
 
-    private suspend fun getRecord(
+    internal suspend fun getRecord(
         name: String,
         zoneId: String,
         token: String,
@@ -187,7 +195,7 @@ class CloudflareDnsClient(
                 val managedByApps: Boolean,
                 @SerialName("managed_by_argo_tunnel")
                 val managedByArgoTunnel: Boolean,
-                val source: String,
+                val source: String? = null,
             )
         }
 
