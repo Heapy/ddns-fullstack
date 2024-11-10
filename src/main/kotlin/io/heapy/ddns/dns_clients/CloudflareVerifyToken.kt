@@ -45,5 +45,4 @@ class CloudflareVerifyToken(
             val type: String? = null,
         )
     }
-
 }

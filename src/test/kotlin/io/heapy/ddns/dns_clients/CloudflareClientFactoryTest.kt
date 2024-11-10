@@ -1,6 +1,7 @@
 package io.heapy.ddns.dns_clients
 
 import io.heapy.ddns.ClientFactory
+import io.heapy.komok.tech.dotenv.dotenv
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -8,7 +9,7 @@ import kotlin.test.assertEquals
 class CloudflareClientFactoryTest {
     @Test
     fun `verify test token`() = runBlocking {
-        val factory = ClientFactory(System.getenv())
+        val factory = ClientFactory(dotenv())
         val token = factory.cloudflareToken
 
         val response = factory.cloudflareVerifyToken(token)
@@ -21,7 +22,7 @@ class CloudflareClientFactoryTest {
 
     @Test
     fun `get dns record`() = runBlocking {
-        val factory = ClientFactory(System.getenv())
+        val factory = ClientFactory(dotenv())
         val config = factory.cloudflareConfiguration
 
         val record = factory.cloudflareDnsClient.getRecord(

@@ -6,16 +6,15 @@ import io.heapy.ddns.dns_clients.DigitalOceanDnsClient
 import io.heapy.ddns.dns_clients.DnsClient
 import io.heapy.ddns.ip_provider.IpProvider
 import io.heapy.ddns.ip_provider.ServerIpProvider
+import io.heapy.ddns.updater.SimpleUpdater
+import io.heapy.ddns.updater.Updater
 import io.heapy.ddns.notifiers.Notifier
 import io.heapy.ddns.notifiers.TelegramNotifier
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import kotlinx.coroutines.delay
-import org.slf4j.LoggerFactory
-import java.time.ZonedDateTime
-import kotlin.concurrent.thread
+import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -39,7 +38,9 @@ open class ClientFactory(
     open val httpClient by lazy {
         HttpClient(CIO) {
             install(ContentNegotiation) {
-                json()
+                json(Json {
+                    ignoreUnknownKeys = true
+                })
             }
         }
     }
@@ -150,60 +151,5 @@ open class ClientFactory(
 
     open suspend fun start() {
         updater.start()
-    }
-}
-
-interface Updater {
-    suspend fun start()
-}
-
-class SimpleUpdater(
-    private val checkPeriod: Duration,
-    private val ipProvider: IpProvider,
-    private val notifier: Notifier?,
-    private val dnsClients: List<DnsClient>,
-) : Updater {
-    override suspend fun start() {
-        var nextUpdate = ZonedDateTime.now()
-        var running = true
-
-        Runtime.getRuntime().addShutdownHook(thread(start = false) {
-            log.info("Shutting down updater")
-            running = false
-        })
-
-        while (running) {
-            delay(100)
-            if (ZonedDateTime.now().isAfter(nextUpdate)) {
-                log.info("Updating IP")
-                sync()
-                nextUpdate = ZonedDateTime.now()
-                    .plusSeconds(checkPeriod.inWholeSeconds)
-                log.info("Next sync at $nextUpdate")
-            }
-        }
-
-        log.info("Updater stopped")
-    }
-
-    private var IP = ""
-
-    private suspend fun sync() {
-        val newIP = ipProvider.getIp()
-
-        if (newIP != IP) {
-            IP = newIP
-            log.info("IP changed to $IP")
-            dnsClients.forEach {
-                val oldIp = it.createOrUpdateRecord(IP)
-                if (oldIp != IP) {
-                    notifier?.notify(IP)
-                }
-            }
-        }
-    }
-
-    companion object {
-        private val log = LoggerFactory.getLogger(SimpleUpdater::class.java)
     }
 }

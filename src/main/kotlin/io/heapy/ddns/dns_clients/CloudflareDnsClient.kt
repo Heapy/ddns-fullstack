@@ -83,7 +83,7 @@ class CloudflareDnsClient(
             }
             .bodyAsText()
 
-        log.info("Creare record response: $response")
+        log.info("Create record response: $response")
     }
 
     private suspend fun updateRecord(
@@ -178,15 +178,21 @@ class CloudflareDnsClient(
             val proxied: Boolean,
             val ttl: Long,
             val priority: Long? = null,
-            val locked: Boolean,
+            val locked: Boolean? = null,
             val meta: Meta,
             val comment: String?,
+            @SerialName("comment_modified_on")
+            val commentModifiedOn: String,
             val tags: List<String>,
             @SerialName("created_on")
             val createdOn: String,
             @SerialName("modified_on")
             val modifiedOn: String,
+            val settings: Settings,
         ) {
+            @Serializable
+            class Settings
+
             @Serializable
             data class Meta(
                 @SerialName("auto_added")

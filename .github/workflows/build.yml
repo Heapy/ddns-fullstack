@@ -1,6 +1,8 @@
 name: "Build"
 on:
-  - push
+  push:
+  schedule:
+    - cron: "0 8 * * 6"
 jobs:
   build:
     name: "Build on JDK ${{ matrix.jdk }}"
@@ -50,7 +52,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Build and push"
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true

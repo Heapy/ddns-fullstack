@@ -1,5 +1,6 @@
 package io.heapy.ddns
 
+import io.heapy.ddns.server.ServerFactory
 import io.ktor.http.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -12,7 +13,9 @@ class ServerTest {
         val serverFactory = ServerFactory(emptyMap())
 
         application {
-            serverFactory.module(this)
+            with(serverFactory.serverModule) {
+                install()
+            }
         }
 
         client.post("/").apply {
@@ -26,7 +29,9 @@ class ServerTest {
         val serverFactory = ServerFactory(emptyMap())
 
         application {
-            serverFactory.module(this)
+            with(serverFactory.serverModule) {
+                install()
+            }
         }
 
         client.get("/healthcheck").apply {

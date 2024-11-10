@@ -25,7 +25,6 @@ Simple client-server DDNS setup for personal use.
 | Parameter               | Default | Required | Description                                                                                |
 |-------------------------|---------|----------|--------------------------------------------------------------------------------------------|
 | MODE                    | client  | false    | Describes mode in which application running, omit or set to `client` to run as DNS updater |
-| RECORD_TYPE             | A       | false    | Record type to update                                                                      |
 | SERVER_URL              | none    | true     | URL to endpoint that returns IP                                                            |
 | CHECK_PERIOD            | 5m      | false    | Period of time between checks for IP change                                                |
 | REQUEST_TIMEOUT         | 30s     | false    | Timeout for request to server                                                              |
