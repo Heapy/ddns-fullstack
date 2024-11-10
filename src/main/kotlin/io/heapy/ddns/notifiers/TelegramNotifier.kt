@@ -1,6 +1,6 @@
 package io.heapy.ddns.notifiers
 
-import io.heapy.ddns.ClientFactory
+import io.heapy.ddns.client.TelegramConfiguration
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 
 class TelegramNotifier(
     private val httpClient: HttpClient,
-    private val telegram: ClientFactory.Configuration.Telegram,
+    private val telegram: TelegramConfiguration,
 ) : Notifier {
     @Serializable
     data class SendMessageRequest(

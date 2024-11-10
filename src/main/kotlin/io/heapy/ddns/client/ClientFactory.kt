@@ -1,4 +1,4 @@
-package io.heapy.ddns
+package io.heapy.ddns.client
 
 import io.heapy.ddns.dns_clients.CloudflareDnsClient
 import io.heapy.ddns.dns_clients.CloudflareVerifyToken
@@ -6,14 +6,14 @@ import io.heapy.ddns.dns_clients.DigitalOceanDnsClient
 import io.heapy.ddns.dns_clients.DnsClient
 import io.heapy.ddns.ip_provider.IpProvider
 import io.heapy.ddns.ip_provider.ServerIpProvider
-import io.heapy.ddns.updater.SimpleUpdater
-import io.heapy.ddns.updater.Updater
 import io.heapy.ddns.notifiers.Notifier
 import io.heapy.ddns.notifiers.TelegramNotifier
+import io.heapy.ddns.updater.SimpleUpdater
+import io.heapy.ddns.updater.Updater
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -22,19 +22,6 @@ import kotlin.time.Duration.Companion.seconds
 open class ClientFactory(
     open val config: Map<String, String>,
 ) {
-    data class Configuration(
-        val serverUrl: String,
-        val checkPeriod: Duration,
-        val requestTimeout: Duration,
-        val attemptsBeforeWarning: Int,
-        val telegram: Telegram?,
-    ) {
-        data class Telegram(
-            val token: String,
-            val chatId: String,
-        )
-    }
-
     open val httpClient by lazy {
         HttpClient(CIO) {
             install(ContentNegotiation) {
@@ -47,7 +34,7 @@ open class ClientFactory(
 
     open val updater: Updater by lazy {
         SimpleUpdater(
-            checkPeriod = configuration.checkPeriod,
+            checkPeriod = clientConfiguration.checkPeriod,
             ipProvider = ipProvider,
             notifier = notifier,
             dnsClients = dnsClients,
@@ -76,7 +63,7 @@ open class ClientFactory(
                 ?: error("DIGITALOCEAN_DOMAIN_NAME is not set"),
             subdomain = config["DIGITALOCEAN_SUBDOMAIN"]
                 ?: error("DIGITALOCEAN_SUBDOMAIN is not set"),
-            ttl = configuration.checkPeriod.inWholeSeconds,
+            ttl = clientConfiguration.checkPeriod.inWholeSeconds,
         )
     }
 
@@ -111,7 +98,7 @@ open class ClientFactory(
     }
 
     open val notifier: Notifier? by lazy {
-        configuration.telegram?.let { telegram ->
+        clientConfiguration.telegram?.let { telegram ->
             TelegramNotifier(
                 httpClient = httpClient,
                 telegram = telegram,
@@ -122,25 +109,25 @@ open class ClientFactory(
     open val ipProvider: IpProvider by lazy {
         ServerIpProvider(
             httpClient = httpClient,
-            serverUrl = configuration.serverUrl,
+            serverUrl = clientConfiguration.serverUrl,
         )
     }
 
     open val checkPeriod by lazy {
-        config["CHECK_PERIOD"]?.let(Duration::parse)
+        config["CHECK_PERIOD"]?.let(Duration.Companion::parse)
             ?: 5.minutes
     }
 
-    open val configuration by lazy {
-        Configuration(
+    open val clientConfiguration by lazy {
+        ClientConfiguration(
             serverUrl = config["SERVER_URL"]
                 ?: error("SERVER_URL is not set"),
             checkPeriod = checkPeriod,
-            requestTimeout = config["REQUEST_TIMEOUT"]?.let(Duration::parse)
+            requestTimeout = config["REQUEST_TIMEOUT"]?.let(Duration.Companion::parse)
                 ?: 30.seconds,
             attemptsBeforeWarning = config["ATTEMPTS_BEFORE_WARNING"]?.toInt() ?: 5,
             telegram = config["TELEGRAM_TOKEN"]?.let { token ->
-                Configuration.Telegram(
+                TelegramConfiguration(
                     token = token,
                     chatId = config["TELEGRAM_CHAT_ID"]
                         ?: error("TELEGRAM_CHAT_ID is not set"),
@@ -153,3 +140,4 @@ open class ClientFactory(
         updater.start()
     }
 }
+
