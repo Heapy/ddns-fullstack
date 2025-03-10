@@ -1,11 +1,14 @@
 package io.heapy.ddns.dns_clients
 
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 import org.slf4j.LoggerFactory
 import java.time.OffsetDateTime
 
@@ -131,7 +134,15 @@ class CloudflareDnsClient(
                 bearerAuth(token)
                 parameter("name", name)
             }
-            .body<GetDnsResponse>()
+            .bodyAsText()
+            .let { text ->
+                try {
+                    Json.decodeFromString<GetDnsResponse>(text)
+                } catch (e: SerializationException) {
+                    log.error("Failed to parse response: $text", e)
+                    throw e
+                }
+            }
             .result
             .firstOrNull()
     }
@@ -143,11 +154,11 @@ class CloudflareDnsClient(
         val ttl: Long,
     )
 
+    @OptIn(ExperimentalSerializationApi::class)
+    @JsonIgnoreUnknownKeys
     @Serializable
     data class GetDnsResponse(
         val success: Boolean,
-        @SerialName("result_info")
-        val resultInfo: ResultInfo,
         val errors: List<Error>,
         val messages: List<Message>,
         val result: List<Result>,
@@ -164,22 +175,16 @@ class CloudflareDnsClient(
             val message: String,
         )
 
+        @JsonIgnoreUnknownKeys
         @Serializable
         data class Result(
             val id: String,
-            @SerialName("zone_id")
-            val zoneId: String,
-            @SerialName("zone_name")
-            val zoneName: String,
             val name: String,
             val type: String,
             val content: String,
             val proxiable: Boolean,
             val proxied: Boolean,
             val ttl: Long,
-            val priority: Long? = null,
-            val locked: Boolean? = null,
-            val meta: Meta,
             val comment: String?,
             @SerialName("comment_modified_on")
             val commentModifiedOn: String,
@@ -188,33 +193,6 @@ class CloudflareDnsClient(
             val createdOn: String,
             @SerialName("modified_on")
             val modifiedOn: String,
-            val settings: Settings,
-        ) {
-            @Serializable
-            class Settings
-
-            @Serializable
-            data class Meta(
-                @SerialName("auto_added")
-                val autoAdded: Boolean,
-                @SerialName("managed_by_apps")
-                val managedByApps: Boolean,
-                @SerialName("managed_by_argo_tunnel")
-                val managedByArgoTunnel: Boolean,
-                val source: String? = null,
-            )
-        }
-
-        @Serializable
-        data class ResultInfo(
-            val page: Long,
-            @SerialName("per_page")
-            val perPage: Long,
-            val count: Long,
-            @SerialName("total_count")
-            val totalCount: Long,
-            @SerialName("total_pages")
-            val totalPage: Long,
         )
     }
 

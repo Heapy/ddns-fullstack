@@ -18,7 +18,7 @@ class SimpleUpdater(
 ) : Updater {
     override suspend fun start() {
         var nextUpdate = ZonedDateTime.now()
-        var running = AtomicBoolean(true)
+        val running = AtomicBoolean(true)
 
         Runtime.getRuntime().addShutdownHook(thread(start = false) {
             log.info("Shutting down updater")
